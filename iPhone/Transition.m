@@ -14,9 +14,8 @@
 
 -(void)initTransition:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
 {
-	CGRect screenBounds = [ [ UIScreen mainScreen ] bounds ];
 	CGRect webViewBounds = [ [ UIScreen mainScreen ] applicationFrame ] ;
-	webViewBounds.origin = screenBounds.origin;
+	
 	transitionView = [[UIView alloc] initWithFrame:webViewBounds];
 	[transitionView setBackgroundColor:[UIColor whiteColor]];
     transitionView.tag = 99;
@@ -24,7 +23,7 @@
 	
 	
 	UIActivityIndicatorView *activityView = [[[UIActivityIndicatorView alloc]
-					 initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray] retain];
+											  initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray] retain];
 	
 	CGFloat activityViewWidth = [activityView frame].size.width;
 	CGFloat activityViewHeight = [activityView frame].size.height;
@@ -32,11 +31,11 @@
 	CGFloat transitionViewHeight = [transitionView frame].size.height;
 	
 	UIView *activityViewContainer = [[UIView alloc] initWithFrame:CGRectMake(
-															  (transitionViewWidth / 2) - (activityViewWidth / 2),
-															  (transitionViewHeight / 2) - (activityViewHeight / 2), 
-															  activityViewWidth, 
-															  activityViewHeight
-															  )];
+																			 (transitionViewWidth / 2) - (activityViewWidth / 2),
+																			 (transitionViewHeight / 2) - (activityViewHeight / 2), 
+																			 activityViewWidth, 
+																			 activityViewHeight
+																			 )];
 	[activityViewContainer addSubview:activityView];
 	[transitionView addSubview:activityViewContainer];
 	[activityView startAnimating];
@@ -84,9 +83,9 @@
 {	
 	// send javascript event when animation is finished
     [[[self appDelegate].viewController webView] stringByEvaluatingJavaScriptFromString:@""
-		"var e = document.createEvent('Events');" 
-		"e.initEvent('transitionAnimationReady');"
-		"document.dispatchEvent(e);"
+	 "var e = document.createEvent('Events');" 
+	 "e.initEvent('transitionAnimationReady');"
+	 "document.dispatchEvent(e);"
 	 ];
 }
 
