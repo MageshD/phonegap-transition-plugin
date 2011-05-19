@@ -4,13 +4,21 @@ Startup plugin for phonegap.
 Allows smooth transitions between different views/actions. 
 
 Installation:
+
+iPhone:
 1) Copy Transition.m and Transition.h to folder Plugins
-2) Include transition.js in your project   
+2) Include transition.js in your index.html   
+
+Android:
+1) Include Android/src as source-Folder in your project.
+2) Include Android/js/transition.js in your index.html
+
 
 Usage:
-1) Call initTransition() on startup of the app.
-2) Call showLoadingView() to fade in the loading view.
-3) When the animation (fading) has finished 'transitionAnimationReady' is fired.4) Call hideLoadingView() to fade out the loading view.
+1) Call initTransition() on startup of the app. (iPhone only)
+2) Call showLoadingView() to fade in the loading view. (Android: can use parameter "animation" ('slide' oder 'fade'))
+3) When the animation (fading) has finished 'transitionAnimationReady' is fired.
+4) Call hideLoadingView() to fade out the loading view.
 
 
 
