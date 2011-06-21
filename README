@@ -11,7 +11,8 @@ iPhone:
 
 Android:
 1) Include Android/src as source-Folder in your project.
-2) Include Android/js/transition.js in your index.html
+2) Copy res/values/loading_spinner.xml in your projects res-folder. (Style for centered progress dialog without border)
+3) Include Android/js/transition.js in your index.html
 
 
 Usage:
