@@ -18,6 +18,7 @@ public class TransitionPlugin extends Plugin {
 
 	public static final String SHOW_LOADING_VIEW = "showLoadingView";	
 	public static final String HIDE_LOADING_VIEW = "hideLoadingView";
+	public static final String INIT_TRANISITION_VIEW = "initTransitionView";
 	public static final int SLIDE_ANIMATION = 0;
 	public static final int FADE_ANIMATION = 1;
 	
@@ -27,6 +28,7 @@ public class TransitionPlugin extends Plugin {
 	private Animation fadeOut = null;
 	private Animation slideIn = null;
 	private Animation slideOut = null;
+	private LoadingSpinner progressSpinner = null;
  
 	private int animation = FADE_ANIMATION;
 	
@@ -61,6 +63,9 @@ public class TransitionPlugin extends Plugin {
 					transitionView.startAnimation(fadeOut);
 			}
 		}
+		else if (action.equals(INIT_TRANISITION_VIEW)) {
+			initTransitionView();
+		}
 		
 		return new PluginResult(PluginResult.Status.NO_RESULT);
 	}
@@ -94,7 +99,7 @@ public class TransitionPlugin extends Plugin {
 		// transitionView und Animations vorbereiten 
 		transitionView = new View(ctx);
 		transitionView.setBackgroundColor(Color.BLACK);		
-		transitionView.setVisibility(View.GONE);
+		transitionView.setVisibility(View.INVISIBLE);
 		
 		ViewGroup parent = (ViewGroup)webView.getParent(); 
 		parent.addView(transitionView);
@@ -108,15 +113,13 @@ public class TransitionPlugin extends Plugin {
 		slideIn.setFillAfter(true);
 		slideIn.setDuration(250);
 		slideIn.setAnimationListener(new AnimationListener() {										
-			@Override
 			public void onAnimationStart(Animation animation) {}
 			
-			@Override
 			public void onAnimationRepeat(Animation animation) {}
 
-			@Override
 			public void onAnimationEnd(Animation animation) {
-				transition.webView.loadUrl("javascript:var e = document.createEvent('Events');e.initEvent('transitionAnimationReady');document.dispatchEvent(e);");				
+				transition.webView.loadUrl("javascript:var e = document.createEvent('Events');e.initEvent('transitionAnimationReady');document.dispatchEvent(e);");
+				transition.progressSpinner = LoadingSpinner.show(ctx, null, null, true);
 			}					
 		});
 		
@@ -124,43 +127,51 @@ public class TransitionPlugin extends Plugin {
 				 Animation.RELATIVE_TO_PARENT,  0.0f, Animation.RELATIVE_TO_PARENT,   0.0f);
 		slideOut.setFillAfter(true);
 		slideOut.setDuration(250);
+		slideOut.setAnimationListener(new AnimationListener() {										
+			public void onAnimationStart(Animation animation) {
+				transition.progressSpinner.dismiss();
+			}
+			
+			public void onAnimationRepeat(Animation animation) {}
+
+			public void onAnimationEnd(Animation animation) {}					
+		});
 		
 		
 		fadeIn = new AlphaAnimation(0.0f, 1.0f);
 		fadeIn.setDuration(250);
 		fadeIn.setAnimationListener(new AnimationListener() {										
-			@Override
 			public void onAnimationStart(Animation animation) {}
 			
-			@Override
 			public void onAnimationRepeat(Animation animation) {}
 
-			@Override
 			public void onAnimationEnd(Animation animation) {					
 				transition.transitionView.setVisibility(View.VISIBLE);
-				transition.webView.loadUrl("javascript:var e = document.createEvent('Events');e.initEvent('transitionAnimationReady');document.dispatchEvent(e);");				
+				transition.webView.loadUrl("javascript:var e = document.createEvent('Events');e.initEvent('transitionAnimationReady');document.dispatchEvent(e);");
+				transition.progressSpinner = LoadingSpinner.show(ctx, null, null, true);
 			}					
 		});		
+		
 		
 		
 		fadeOut = new AlphaAnimation(1.0f, 0.0f);
 		fadeOut.setDuration(555);
 		fadeOut.setAnimationListener(new AnimationListener() {										
-			@Override
-			public void onAnimationStart(Animation animation) {}
+			public void onAnimationStart(Animation animation) {
+				transition.progressSpinner.dismiss();				
+			}
 			
-			@Override
 			public void onAnimationRepeat(Animation animation) {}
 
-			@Override
 			public void onAnimationEnd(Animation animation) {					
-				transition.transitionView.setVisibility(View.GONE);					
+				transition.transitionView.setVisibility(View.INVISIBLE);					
 			}					
 		});	
 		
 				
 		isInit = true;
-	}	
-	
+	}
 	
 }
+	
+

@@ -15,7 +15,7 @@ function Transition() {
 
 
 Transition.prototype.initTransition = function() {
-	return;
+	return PhoneGap.exec(null, null, 'TransitionPlugin', 'initTransitionView', []);
 }
 
 /**

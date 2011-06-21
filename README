@@ -16,10 +16,10 @@ Android:
 
 
 Usage:
-1) Call initTransition() on startup of the app. (iPhone only)
-2) Call showLoadingView() to fade in the loading view. (Android: can use parameter "animation" ('slide' oder 'fade'))
-3) When the animation (fading) has finished 'transitionAnimationReady' is fired.
-4) Call hideLoadingView() to fade out the loading view.
+1) Call initTransition() on startup of the app.
+2) Call showLoadingView() to show the loading view. (Android: can use parameter "animation" ('slide' oder 'fade'))
+3) When the animation has finished 'transitionAnimationReady' is fired.
+4) Call hideLoadingView() to hide the loading view.
 
 
 
