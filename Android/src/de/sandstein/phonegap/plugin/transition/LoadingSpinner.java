@@ -1,6 +1,5 @@
 package de.sandstein.phonegap.plugin.transition;
 
-import museum.skd.via_regia.R;
 import android.app.Dialog;
 import android.content.Context;
 import android.view.ViewGroup.LayoutParams;
